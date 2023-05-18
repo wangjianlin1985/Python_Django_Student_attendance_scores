@@ -1,0 +1,123 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable=no">
+<title>出勤状态添加</title>
+<link href="{% static 'plugins/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/bootstrap-dashen.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/font-awesome.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/animate.css' %}" rel="stylesheet">
+<link href="{% static 'plugins/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" media="screen">
+</head>
+<body style="margin-top:70px;">
+{% include 'header.html' %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 wow fadeInUp" data-wow-duration="0.5s">
+			<div>
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+			    	<li role="presentation" ><a href="{% url 'AttendanceState:frontList' %}">出勤状态列表</a></li>
+			    	<li role="presentation" class="active"><a href="#attendanceStateAdd" aria-controls="attendanceStateAdd" role="tab" data-toggle="tab">添加出勤状态</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+				    <div role="tabpanel" class="tab-pane" id="attendanceStateList">
+				    </div>
+				    <div role="tabpanel" class="tab-pane active" id="attendanceStateAdd"> 
+				      	<form class="form-horizontal" name="attendanceStateAddForm" id="attendanceStateAddForm" enctype="multipart/form-data" method="post"  class="mar_t15">
+				    {% csrf_token %}
+						  <div class="form-group">
+							 <label for="attendanceState_stateId" class="col-md-2 text-right">状态编号:</label>
+							 <div class="col-md-8"> 
+							 	<input type="text" id="attendanceState_stateId" name="attendanceState.stateId" class="form-control" placeholder="请输入状态编号">
+							 </div>
+						  </div> 
+						  <div class="form-group">
+						  	 <label for="attendanceState_stateName" class="col-md-2 text-right">状态名称:</label>
+						  	 <div class="col-md-8">
+							    <input type="text" id="attendanceState_stateName" name="attendanceState.stateName" class="form-control" placeholder="请输入状态名称">
+							 </div>
+						  </div>
+				          <div class="form-group">
+				             <span class="col-md-2""></span>
+				             <span onclick="ajaxAttendanceStateAdd();" class="btn btn-primary bottom5 top5">添加</span>
+				          </div>
+						</form> 
+				        <style>#attendanceStateAddForm .form-group {margin:10px;}  </style>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> 
+</div>
+
+{% include 'footer.html' %}
+<script src="{% static 'plugins/jquery.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap.js' %}"></script>
+<script src="{% static 'plugins/wow.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrapvalidator/js/bootstrapValidator.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'plugins/bootstrap-datetimepicker.min.js' %}" charset="UTF-8"></script>
+<script type="text/javascript" src="{% static 'plugins/locales/bootstrap-datetimepicker.zh-CN.js' %}" charset="UTF-8"></script>
+<script>
+	//提交添加出勤状态信息
+	function ajaxAttendanceStateAdd() { 
+		//提交之前先验证表单
+		$("#attendanceStateAddForm").data('bootstrapValidator').validate();
+		if(!$("#attendanceStateAddForm").data('bootstrapValidator').isValid()){
+			return;
+		}
+		jQuery.ajax({
+			type : "post",
+			url : "{% url 'AttendanceState:frontAdd' %}",
+			dataType : "json" , 
+			data: new FormData($("#attendanceStateAddForm")[0]),
+			success : function(obj) {
+				if(obj.success){ 
+					alert("保存成功！");
+					location.reload();
+				} else {
+					alert(obj.message);
+				}
+			},
+			processData: false, 
+			contentType: false, 
+		});
+	} 
+$(function(){
+	/*小屏幕导航点击关闭菜单*/
+    $('.navbar-collapse a').click(function(){
+        $('.navbar-collapse').collapse('hide');
+    });
+    new WOW().init();
+	//验证出勤状态添加表单字段
+	$('#attendanceStateAddForm').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			"attendanceState.stateId": {
+				validators: {
+					notEmpty: {
+						message: "状态编号不能为空",
+					}
+				}
+			},
+			"attendanceState.stateName": {
+				validators: {
+					notEmpty: {
+						message: "状态名称不能为空",
+					}
+				}
+			},
+		}
+	}); 
+})
+</script>
+</body>
+</html>

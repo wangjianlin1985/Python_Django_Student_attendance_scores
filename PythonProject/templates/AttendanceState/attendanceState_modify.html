@@ -1,0 +1,27 @@
+{% load staticfiles %}
+{% include 'check_logstate.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/attendanceState.css' %}" />
+<div id="attendanceState_EditDiv">
+	<form id="attendanceStateModifyForm" enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+		<div>
+			<span class="label">状态编号:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="attendanceState_stateId_modify" name="attendanceState.stateId" value="{{ stateId }}" style="width:200px" />
+			</span>
+		</div>
+
+		<div>
+			<span class="label">状态名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="attendanceState_stateName_modify" name="attendanceState.stateName" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div class="operation">
+			<a id="attendanceStateModifyButton" class="easyui-linkbutton">更新</a> 
+		</div>
+	</form>
+</div>
+<script src="{% static 'js/AttendanceState/attendanceState_modify.js' %}"></script>

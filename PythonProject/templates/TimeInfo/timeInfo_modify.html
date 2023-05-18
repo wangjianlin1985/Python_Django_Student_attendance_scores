@@ -1,0 +1,27 @@
+{% load staticfiles %}
+{% include 'check_logstate.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/timeInfo.css' %}" />
+<div id="timeInfo_EditDiv">
+	<form id="timeInfoModifyForm" enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+		<div>
+			<span class="label">记录编号:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="timeInfo_timeInfoId_modify" name="timeInfo.timeInfoId" value="{{ timeInfoId }}" style="width:200px" />
+			</span>
+		</div>
+
+		<div>
+			<span class="label">学时名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="timeInfo_timeInfoName_modify" name="timeInfo.timeInfoName" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div class="operation">
+			<a id="timeInfoModifyButton" class="easyui-linkbutton">更新</a> 
+		</div>
+	</form>
+</div>
+<script src="{% static 'js/TimeInfo/timeInfo_modify.js' %}"></script>

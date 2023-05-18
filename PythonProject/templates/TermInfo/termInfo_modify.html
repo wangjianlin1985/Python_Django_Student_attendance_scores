@@ -1,0 +1,27 @@
+{% load staticfiles %}
+{% include 'check_logstate.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/termInfo.css' %}" />
+<div id="termInfo_EditDiv">
+	<form id="termInfoModifyForm" enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+		<div>
+			<span class="label">学期编号:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="termInfo_termId_modify" name="termInfo.termId" value="{{ termId }}" style="width:200px" />
+			</span>
+		</div>
+
+		<div>
+			<span class="label">学期名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="termInfo_termName_modify" name="termInfo.termName" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div class="operation">
+			<a id="termInfoModifyButton" class="easyui-linkbutton">更新</a> 
+		</div>
+	</form>
+</div>
+<script src="{% static 'js/TermInfo/termInfo_modify.js' %}"></script>

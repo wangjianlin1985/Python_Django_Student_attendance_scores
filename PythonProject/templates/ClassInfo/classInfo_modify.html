@@ -1,0 +1,43 @@
+{% load staticfiles %}
+{% include 'check_logstate.html' %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/classInfo.css' %}" />
+<div id="classInfo_EditDiv">
+	<form id="classInfoModifyForm" enctype="multipart/form-data"  method="post">
+        {% csrf_token %}
+		<div>
+			<span class="label">班级编号:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="classInfo_classNo_modify" name="classInfo.classNo" value="{{ classNo }}" style="width:200px" />
+			</span>
+		</div>
+
+		<div>
+			<span class="label">班级名称:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="classInfo_className_modify" name="classInfo.className" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">班主任姓名:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="classInfo_banzhuren_modify" name="classInfo.banzhuren" style="width:200px" />
+
+			</span>
+
+		</div>
+		<div>
+			<span class="label">成立日期:</span>
+			<span class="inputControl">
+				<input class="textbox" type="text" id="classInfo_beginDate_modify" name="classInfo.beginDate" />
+
+			</span>
+
+		</div>
+		<div class="operation">
+			<a id="classInfoModifyButton" class="easyui-linkbutton">更新</a> 
+		</div>
+	</form>
+</div>
+<script src="{% static 'js/ClassInfo/classInfo_modify.js' %}"></script>
